@@ -1,11 +1,29 @@
 <!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Skiing</title>
-<style>html,body{margin:0;height:100%;background:#000}img{width:100vw;height:100vh;object-fit:contain;display:block;cursor:pointer}#n{position:fixed;bottom:12px;right:16px;color:#fff8;font:16px sans-serif}</style></head>
-<body><img id="s"><div id="n"></div><script>
-const S=["title","history","basics","gear","lifts","tricks","safety","end"];let i=0;
-const show=()=>{s.src=S[i]+".png";n.textContent=(i+1)+" / "+S.length};
-const go=d=>{i=Math.max(0,Math.min(S.length-1,i+d));show()};
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>html,body{margin:0;height:100%;background:#000;overflow:hidden;font-family:Inter,sans-serif;color:#fff}
+#bg{position:fixed;inset:0;background:center/cover no-repeat;transition:background-image .4s}
+#sh{position:fixed;inset:0;background:linear-gradient(90deg,#000c 0%,#0008 45%,#0000 75%)}
+#t{position:fixed;left:6vw;top:50%;transform:translateY(-50%);max-width:48vw}
+h1{font-family:'Bebas Neue';font-size:9vw;line-height:.9;margin:0 0 2vh;letter-spacing:.02em;text-shadow:0 4px 20px #000}
+h2{font-weight:400;font-size:2.2vw;margin:0 0 2vh;opacity:.9}
+ul{margin:0;padding:0;list-style:none}li{font-size:2vw;line-height:1.35;margin:1.4vh 0;padding-left:2.2vw;position:relative;text-shadow:0 2px 8px #000}
+li:before{content:"▸";position:absolute;left:0;color:#7cc8ff}
+#n{position:fixed;bottom:2vh;right:2vw;font-size:1.4vw;opacity:.6}
+@media(max-width:700px){#t{max-width:88vw}h1{font-size:16vw}h2,li{font-size:4.5vw}#sh{background:#0009}}</style></head>
+<body><div id="bg"></div><div id="sh"></div><div id="t"></div><div id="n"></div><script>
+const S=[
+{i:"title",h:"Skiing",s:"Gravity, snow, and a pair of planks"},
+{i:"history",h:"History",l:["Rock carvings in Norway show skis over 4,000 years old","Hunters and soldiers used them to cross snowy land","The word “ski” comes from Old Norse <i>skíð</i> — a split piece of wood","Alpine downhill skiing took off in the Alps in the 1900s"]},
+{i:"basics",h:"The Basics",l:["Pizza (snowplow) to slow down and stop","French fries (parallel) to go faster","Turn by shifting weight onto the downhill ski","Keep knees bent and weight forward"]},
+{i:"gear",h:"Gear",l:["Skis, boots, and bindings that release in a fall","Poles for balance and rhythm","Helmet and goggles — always","Layers: base, warm middle, waterproof shell"]},
+{i:"lifts",h:"Lifts",l:["Magic carpet and T-bar for beginners","Chairlifts carry 2–8 skiers up the mountain","Gondolas and cable cars reach the highest peaks","Lower the safety bar and keep your tips up"]},
+{i:"tricks",h:"Tricks",l:["Terrain parks have jumps, rails, and boxes","Grabs: grab your skis mid-air","Spins: 360, 540, 720 and beyond","Freestyle skiing has been Olympic since 1992"]},
+{i:"end",h:"See You<br>on the Slopes",s:"Thanks for watching"}];
+let i=0;const go=d=>{i=Math.max(0,Math.min(S.length-1,i+d));show()};
+function show(){const x=S[i];bg.style.backgroundImage=`url(${x.i}.png)`;
+t.innerHTML=`<h1>${x.h}</h1>`+(x.s?`<h2>${x.s}</h2>`:"")+(x.l?`<ul>${x.l.map(a=>`<li>${a}</li>`).join("")}</ul>`:"");n.textContent=(i+1)+" / "+S.length}
 addEventListener("keydown",e=>{if(["ArrowRight"," ","PageDown"].includes(e.key))go(1);if(["ArrowLeft","PageUp"].includes(e.key))go(-1)});
-s.onclick=e=>go(e.clientX<innerWidth/3?-1:1);S.forEach(x=>new Image().src=x+".png");show();
-const q=new URLSearchParams(location.search);if(q.has("play")){const t=(+q.get("play")||6)*1000;setInterval(()=>{i=(i+1)%S.length;show()},t)}
-addEventListener("click",()=>{document.fullscreenElement||document.documentElement.requestFullscreen?.().catch(()=>{})},{once:true});
+addEventListener("click",e=>{document.fullscreenElement||document.documentElement.requestFullscreen?.().catch(()=>{});go(e.clientX<innerWidth/3?-1:1)});
+S.forEach(x=>new Image().src=x.i+".png");show();
+const q=new URLSearchParams(location.search);if(q.has("play")){const ms=(+q.get("play")||6)*1000;setInterval(()=>{i=(i+1)%S.length;show()},ms)}
 </script></body></html>
