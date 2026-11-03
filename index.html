@@ -1,29 +1,28 @@
 <!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Skiing</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-<style>html,body{margin:0;height:100%;background:#000;overflow:hidden;font-family:Inter,sans-serif;color:#fff}
-#bg{position:fixed;inset:0;background:center/cover no-repeat;transition:background-image .4s}
-#sh{position:fixed;inset:0;background:linear-gradient(90deg,#000c 0%,#0008 45%,#0000 75%)}
-#t{position:fixed;left:6vw;top:50%;transform:translateY(-50%);max-width:48vw}
-h1{font-family:'Bebas Neue';font-size:9vw;line-height:.9;margin:0 0 2vh;letter-spacing:.02em;text-shadow:0 4px 20px #000}
-h2{font-weight:400;font-size:2.2vw;margin:0 0 2vh;opacity:.9}
-ul{margin:0;padding:0;list-style:none}li{font-size:2vw;line-height:1.35;margin:1.4vh 0;padding-left:2.2vw;position:relative;text-shadow:0 2px 8px #000}
-li:before{content:"▸";position:absolute;left:0;color:#7cc8ff}
-#n{position:fixed;bottom:2vh;right:2vw;font-size:1.4vw;opacity:.6}
-@media(max-width:700px){#t{max-width:88vw}h1{font-size:16vw}h2,li{font-size:4.5vw}#sh{background:#0009}}</style></head>
-<body><div id="bg"></div><div id="sh"></div><div id="t"></div><div id="n"></div><script>
-const S=[
-{i:"title",h:"Skiing",s:"Gravity, snow, and a pair of planks"},
-{i:"history",h:"History",l:["Rock carvings in Norway show skis over 4,000 years old","Hunters and soldiers used them to cross snowy land","The word “ski” comes from Old Norse <i>skíð</i> — a split piece of wood","Alpine downhill skiing took off in the Alps in the 1900s"]},
-{i:"basics",h:"The Basics",l:["Pizza (snowplow) to slow down and stop","French fries (parallel) to go faster","Turn by shifting weight onto the downhill ski","Keep knees bent and weight forward"]},
-{i:"gear",h:"Gear",l:["Skis, boots, and bindings that release in a fall","Poles for balance and rhythm","Helmet and goggles — always","Layers: base, warm middle, waterproof shell"]},
-{i:"lifts",h:"Lifts",l:["Magic carpet and T-bar for beginners","Chairlifts carry 2–8 skiers up the mountain","Gondolas and cable cars reach the highest peaks","Lower the safety bar and keep your tips up"]},
-{i:"tricks",h:"Tricks",l:["Terrain parks have jumps, rails, and boxes","Grabs: grab your skis mid-air","Spins: 360, 540, 720 and beyond","Freestyle skiing has been Olympic since 1992"]},
-{i:"end",h:"See You<br>on the Slopes",s:"Thanks for watching"}];
-let i=0;const go=d=>{i=Math.max(0,Math.min(S.length-1,i+d));show()};
-function show(){const x=S[i];bg.style.backgroundImage=`url(${x.i}.png)`;
-t.innerHTML=`<h1>${x.h}</h1>`+(x.s?`<h2>${x.s}</h2>`:"")+(x.l?`<ul>${x.l.map(a=>`<li>${a}</li>`).join("")}</ul>`:"");n.textContent=(i+1)+" / "+S.length}
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Rubik:wght@400;500&display=swap" rel="stylesheet">
+<style>html,body{margin:0;height:100%;background:#0f1c2e;overflow:hidden}
+#st{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform-origin:0 0;font-family:Rubik,Arial,sans-serif;color:#f4f7fa;cursor:pointer}
+.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.sh{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,20,35,.85) 0%,rgba(10,20,35,.35) 45%,rgba(10,20,35,0) 75%)}
+.k,.h,.s{position:absolute;left:128px;width:1664px;margin:0;opacity:0;transform:translateY(40px);transition:opacity .6s,transform .6s}
+.k{bottom:420px;font-size:32px;font-weight:500;color:#7fd4ff;letter-spacing:4px;text-transform:uppercase}
+.h{bottom:210px;font-family:Oswald,Arial,sans-serif;font-size:180px;font-weight:700;line-height:1;text-transform:uppercase;transition-delay:.15s}
+.s{bottom:128px;font-size:40px;color:#dfe8f0;transition-delay:.3s}
+.in .k,.in .h,.in .s{opacity:1;transform:none}
+#n{position:fixed;bottom:12px;right:16px;color:#fff8;font:16px Rubik,sans-serif}</style></head>
+<body><div id="st"><img class="bg" id="bg"><div class="sh"></div><p class="k" id="k"></p><h1 class="h" id="h"></h1><p class="s" id="s"></p></div><div id="n"></div><script>
+const S=[["title","A presentation by","Skiing","Omri Cohen · Matan Berkley"],
+["history","01","Where it started","Thousands of years ago"],
+["gear","02","The gear","Skis · Boots · Poles · Helmet · Goggles"],
+["basics","03","First day","Pizza to stop. Fries to go."],
+["lifts","04","The lifts","Chairlift · Gondola · T-bar"],
+["end","Thanks","Questions?","Omri Cohen · Matan Berkley"]];
+let i=0;
+function fit(){const z=Math.min(innerWidth/1920,innerHeight/1080);st.style.transform=`scale(${z}) translate(-50%,-50%)`}
+function show(){const[a,b,c,d]=S[i];st.classList.remove("in");bg.src=a+".png";k.textContent=b;h.textContent=c;s.textContent=d;n.textContent=(i+1)+" / "+S.length;requestAnimationFrame(()=>requestAnimationFrame(()=>st.classList.add("in")))}
+const go=d=>{i=Math.max(0,Math.min(S.length-1,i+d));show()};
 addEventListener("keydown",e=>{if(["ArrowRight"," ","PageDown"].includes(e.key))go(1);if(["ArrowLeft","PageUp"].includes(e.key))go(-1)});
 addEventListener("click",e=>{document.fullscreenElement||document.documentElement.requestFullscreen?.().catch(()=>{});go(e.clientX<innerWidth/3?-1:1)});
-S.forEach(x=>new Image().src=x.i+".png");show();
+addEventListener("resize",fit);S.forEach(x=>new Image().src=x[0]+".png");fit();show();
 const q=new URLSearchParams(location.search);if(q.has("play")){const ms=(+q.get("play")||6)*1000;setInterval(()=>{i=(i+1)%S.length;show()},ms)}
 </script></body></html>
